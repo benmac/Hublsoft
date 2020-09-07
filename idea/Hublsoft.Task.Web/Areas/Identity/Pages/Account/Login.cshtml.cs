@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Hublsoft.Web.Infrastructure;
 
 namespace Hublsoft.Web.Areas.Identity.Pages.Account
 {
@@ -20,14 +21,16 @@ namespace Hublsoft.Web.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly LoginService _service;
 
         public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager, LoginService service)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _service = service;
         }
 
         [BindProperty]
@@ -82,6 +85,7 @@ namespace Hublsoft.Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    _service.RecordLogin(Input.Email, DateTime.Now);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
