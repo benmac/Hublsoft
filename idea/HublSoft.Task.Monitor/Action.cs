@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hublsoft.Task.Monitor
+namespace Hublsoft.Monitor
 {
     public static class Action
     {
-        public static void RecordLogin(HublSoftDbContext context, string userId, DateTime timestamp)
+        public static void RecordLogin(DbContext context, string userId, DateTime timestamp)
         {
             var model = new LoginMonitorModel() { UserId = userId, TimeStamp = timestamp };
 
-            context.UserLogins.Add(model);
+            ((HublSoftDbContext)context).UserLogins.Add(model);
             context.SaveChanges();
         }
 

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hublsoft.Task.Monitor.Tests
+namespace Hublsoft.Monitor.Tests
 {
     public class Tests
     {

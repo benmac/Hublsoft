@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Hublsoft.Task.Monitor
+namespace Hublsoft.Monitor
 {
     public class HublSoftDbContext : DbContext
     {
