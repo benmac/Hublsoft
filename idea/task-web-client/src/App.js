@@ -4,13 +4,14 @@ import './App.css';
 
 function App() {
     const [ sessions, setSessions ] = useState([]);
-    useEffect(() => {
-        setSessions([{
-            id: 1,
-            timeStamp: "2020-09-09T23:46:27.1129587",
-            userId: "agibson@hublsoft.com"
-        }])
-    },[])
+    async function initSessions() {
+        const data = await fetch("https://localhost:5001/LoginMonitor", {
+            headers: { accepts: "application/json" }
+        }).then(res => res.json());
+        console.log(data);
+        setSessions(data);
+    }
+    useEffect(() => { initSessions(); }, []);
     return <Sessions sessions={sessions} />
 };
 
