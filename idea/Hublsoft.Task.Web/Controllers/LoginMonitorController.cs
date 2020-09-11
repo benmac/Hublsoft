@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hublsoft.Web.Infrastructure;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hublsoft.Web.Controllers
@@ -18,9 +19,11 @@ namespace Hublsoft.Web.Controllers
 
         public IActionResult Index()
         {
-            var model = _service.GetLoginsForAllUsers();
-            return View(model);
+            var preferJSON = Request.Headers["Accepts"] == "application/json";
+            return preferJSON ? IndexAsJSON() : View();
         }
+
+        private IActionResult IndexAsJSON() => base.Json(_service.GetLoginsForAllUsers());
 
         [HttpPost]
         public IActionResult Index(string userId, int? count, int granularity)
