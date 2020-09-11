@@ -3,7 +3,7 @@ import Sessions from "./Sessions";
 import './App.css';
 
 function App() {
-    const [ sessions, setSessions ] = useState([]);
+    const [ sessions, setSessions ] = useState();
     async function initSessions() {
         const data = await fetch("https://localhost:5001/LoginMonitor", {
             headers: { accepts: "application/json" }
@@ -12,7 +12,9 @@ function App() {
         setSessions(data);
     }
     useEffect(() => { initSessions(); }, []);
-    return <Sessions sessions={sessions} />
+    return (sessions && sessions.length)
+        ? <Sessions sessions={sessions} />
+        : <div>Loading...</div>
 };
 
 export default App;
