@@ -19,7 +19,8 @@ namespace Hublsoft.Web.Controllers
         public IActionResult Index()
         {
             var model = _service.GetLoginsForAllUsers();
-            return View(model);
+            var preferJSON = Request.Headers["Accepts"] == "application/json";
+            return preferJSON ? (IActionResult) Json(model) : View(model);
         }
 
         [HttpPost]
