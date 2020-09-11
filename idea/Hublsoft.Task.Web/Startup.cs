@@ -12,6 +12,7 @@ using Hublsoft.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Hublsoft.Web.Infrastructure;
 
 namespace Hublsoft.Web
 {
@@ -34,6 +35,7 @@ namespace Hublsoft.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddScoped<LoginService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
